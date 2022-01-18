@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">List User</string>
+    <string name="status_active">ACTIVE</string>
+    <string name="status_inactive">INACTIVE</string>
+</resources>
