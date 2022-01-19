@@ -52,13 +52,13 @@ class UserPost : AppCompatActivity() {
             jsonArray = response.getJSONArray("data")
             val dataLength = jsonArray.length()
             tvTotalPost.text = "Total post: $dataLength"
-                for (i in 0 until dataLength){
-                    jsonData = jsonArray.getJSONObject(i)
-                    val postData = PostList("","")
-                    postData.title = jsonData.getString("title").toString()
-                    postData.deScrip = jsonData.getString("body").toString()
-                    data.add(postData)
-                }
+            for (i in 0 until dataLength){
+                jsonData = jsonArray.getJSONObject(i)
+                val postData = PostList("","")
+                postData.title = jsonData.getString("title").toString()
+                postData.deScrip = jsonData.getString("body").toString()
+                data.add(postData)
+            }
 
             rvPost.apply {
                 adapter = UserPostAdapter(data)
@@ -72,11 +72,10 @@ class UserPost : AppCompatActivity() {
 
     private fun getUserDetail(id: String){
         val queue = Volley.newRequestQueue(this)
-        val url = "https://gorest.co.in//public/v1/users/$id"
-        var jsonObject = JSONObject()
+        val url = "https://gorest.co.in/public/v1/users/$id"
         val stringRequest = JsonObjectRequest(Request.Method.GET,url,null,{
              response ->
-            jsonObject = response.getJSONObject("data")
+            val jsonObject = response.getJSONObject("data")
             val profileData = ProfileLists("","","","","")
             if(jsonObject.getString("gender") == "male"){
                 Glide.with(this).load(profileData.imgMaleUrl).centerCrop().placeholder(R.drawable.origi).into(imgProfile)
@@ -84,9 +83,11 @@ class UserPost : AppCompatActivity() {
                 Glide.with(this).load(profileData.imgFemaleUrl).centerCrop().placeholder(R.drawable.origi).into(imgProfile)
             }
             tvName.text = jsonObject.getString("name")
-
+            if(tvTotalPost.text == "Total post: 0"){
+                Toast.makeText(this, "${jsonObject.getString("name")} has no post.", Toast.LENGTH_SHORT).show()
+            }
         },{
-
+            
         })
         queue.add(stringRequest)
     }
