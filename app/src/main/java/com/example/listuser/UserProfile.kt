@@ -28,6 +28,7 @@ class UserProfile : AppCompatActivity() {
     private lateinit var imgProfile: ImageView
     private lateinit var tvEditAcc : TextView
     private lateinit var tvTodo : TextView
+    private lateinit var tvPost: TextView
 
 
 
@@ -41,6 +42,7 @@ class UserProfile : AppCompatActivity() {
         tvEmail = findViewById(R.id.tv_Email)
         tvStatus = findViewById(R.id.tv_Status)
         tvEditAcc= findViewById(R.id.tv_Edit)
+        tvPost = findViewById(R.id.tv_Post)
 
         val id = intent.getStringExtra("id").toString()
         userList(id)
@@ -55,6 +57,12 @@ class UserProfile : AppCompatActivity() {
             startActivity(intent)
         }
 
+        tvPost.setOnClickListener {
+            val intent = Intent(this,UserPost::class.java)
+            intent.putExtra("id",id)
+            startActivity(intent)
+        }
+
 
     }
 
@@ -63,7 +71,7 @@ class UserProfile : AppCompatActivity() {
         val url = "https://gorest.co.in/public/v1/users/"
         var jsonArray : JSONArray
         var jsonObject : JSONObject
-        var profile = ProfileLists("","","","","")
+        val profile = ProfileLists("","","","","")
         val stringRequest = JsonObjectRequest(Request.Method.GET,url,null,{
             response ->
             jsonArray = response.getJSONArray("data")

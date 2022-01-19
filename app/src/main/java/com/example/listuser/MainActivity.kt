@@ -10,6 +10,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.listuser.Models.ProfileLists
+import com.example.listuser.adapter.ProfileAdapter
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val data = ArrayList<ProfileLists>()
 
         val queue = Volley.newRequestQueue(this)
-        var url ="https://gorest.co.in/public/v1/users?access-token=c9a937f6edee37fee3313a14efe69d629aa76d7c91138e1ee2a999685c7aadd3&page=1"
+        val url ="https://gorest.co.in/public/v1/users?access-token=c9a937f6edee37fee3313a14efe69d629aa76d7c91138e1ee2a999685c7aadd3&page=1"
         var jsonArray: JSONArray
         var jsonData: JSONObject
 

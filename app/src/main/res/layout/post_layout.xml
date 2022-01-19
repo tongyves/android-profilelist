@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:contentPadding="10dp"
+    app:cardCornerRadius="10dp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:id="@+id/relativeLayout">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Title: Alpha Centuari"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tvDescript"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:layout_marginTop="10dp"
+            android:text="Description:"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_Descript"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescript"
+            android:text="Alpha Centauri, the closest star system to Earth, is just 4 light-years away. However, while the star system is remarkably close by cosmic standard, 4 light-years is actually quite far away and, according to some estimates, would take roughly 6,300 years to get there with existing technology. So before even diving into the specifics of the system or its planets, no, humans can not yet go to Alpha Centauri and live there because, simply put, we wouldn't survive the trip."/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.cardview.widget.CardView>

@@ -1,4 +1,4 @@
-package com.example.listuser
+package com.example.listuser.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.listuser.Models.ProfileLists
+import com.example.listuser.R
+import com.example.listuser.UserProfile
 
 
 class ProfileAdapter(
@@ -20,12 +22,12 @@ class ProfileAdapter(
     private val profileList: List<ProfileLists>
 ): RecyclerView.Adapter<ProfileAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileAdapter.ViewHolder {
-        var v = LayoutInflater.from(parent.context).inflate(R.layout.cardlayout,parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.cardlayout,parent,false)
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: ProfileAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val profile = profileList[position]
         holder.id = profile.id
         holder.tvName.text = profile.name
@@ -34,7 +36,7 @@ class ProfileAdapter(
             holder.tvStatus.apply {
                 gravity = Gravity.CENTER
                 setText(R.string.status_inactive)
-                setTextColor(ContextCompat.getColor(context,R.color.cus_pink))
+                setTextColor(ContextCompat.getColor(context, R.color.cus_pink))
                 setBackgroundResource(R.drawable.btn_rounded_withstroke)
             }
         }
@@ -65,7 +67,7 @@ class ProfileAdapter(
                // val position: Int = adapterPosition
                 Toast.makeText(itemView.context,"You select user ID:${id}",Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(itemView.context,UserProfile::class.java)
+                val intent = Intent(itemView.context, UserProfile::class.java)
                 intent.putExtra("id",id.toString())
                 context.startActivity(intent)
             }
