@@ -1,22 +1,18 @@
 package com.example.listuser.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.listuser.Models.PostList
 import com.example.listuser.R
-import java.lang.IndexOutOfBoundsException
 
 class UserPostAdapter(
     private val postList: List<PostList>
 ) : RecyclerView.Adapter<UserPostAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostAdapter.ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.post_layout,parent,false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.card_post_layout,parent,false)
         return ViewHolder(v)
     }
 

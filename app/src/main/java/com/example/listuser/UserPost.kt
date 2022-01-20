@@ -24,9 +24,10 @@ import org.w3c.dom.Text
 class UserPost : AppCompatActivity() {
 
     private lateinit var rvPost : RecyclerView
+    private lateinit var btnBack : ImageView
     private lateinit var imgProfile : ImageView
-    private lateinit var tvTotalPost : TextView
     private lateinit var tvName : TextView
+    private lateinit var tvTotalPost : TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_post)
@@ -36,8 +37,13 @@ class UserPost : AppCompatActivity() {
         imgProfile = findViewById(R.id.img_Profile)
         tvName = findViewById(R.id.tv_Name)
         tvTotalPost = findViewById(R.id.tvTotal)
+        btnBack = findViewById(R.id.btn_back)
+
         getPost(id)
         getUserDetail(id)
+        btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getPost(id: String){
@@ -59,7 +65,6 @@ class UserPost : AppCompatActivity() {
                 postData.deScrip = jsonData.getString("body").toString()
                 data.add(postData)
             }
-
             rvPost.apply {
                 adapter = UserPostAdapter(data)
                 layoutManager = LinearLayoutManager(this@UserPost)
@@ -68,6 +73,7 @@ class UserPost : AppCompatActivity() {
             Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
         })
         queue.add(stringRequest)
+
     }
 
     private fun getUserDetail(id: String){

@@ -12,13 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ListUser">
         <activity
+            android:name=".UserTodo"
+            android:exported="false" />
+        <activity
             android:name=".UserPost"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".EditAccount"

@@ -3,11 +3,15 @@ package com.example.listuser
 import android.app.VoiceInteractor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.Layout
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.JsonRequest
@@ -56,6 +60,101 @@ class EditAccount : AppCompatActivity() {
         tvEditAcc.setOnClickListener {
             editAcc(id)
         }
+
+        etUsername.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun afterTextChanged(p0: Editable?) {
+                tvEditAcc.apply {
+                    isEnabled = true
+                    setTextColor(ContextCompat.getColor(context,R.color.cus_pink))
+                }
+            }
+
+        })
+
+        etStatus.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun afterTextChanged(p0: Editable?) {
+                tvEditAcc.apply {
+                    isEnabled = true
+                    setTextColor(ContextCompat.getColor(context,R.color.cus_pink))
+                }
+            }
+
+        })
+
+    }
+
+    private fun update(id: String){
+        val queue = Volley.newRequestQueue(this)
+        val url = "https://gorest.co.in/public/v1/users/$id"
+        val token = "755ee9afdf138797d9e7bcb1aa644e8e136d881b9a94bf46f4e9acc8cb898681"
+        var jsonRequest = JSONObject()
+        jsonRequest.put("name",etUsername.text.toString())
+        jsonRequest.put("status",etStatus.text.toString())
+        val stringRequest = object: JsonObjectRequest(Method.PUT,url,jsonRequest,{
+                response ->
+            Log.i("Update Response",response.toString())
+            tvEditAcc.apply {
+                text = "Edit"
+                setTextColor(ContextCompat.getColor(context,R.color.black))
+            }
+
+        },{
+            Toast.makeText(this@EditAccount, "failed", Toast.LENGTH_SHORT).show()
+        })
+        {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String,String>()
+                headers["Authorization"] = "Bearer $token"
+                return headers
+            }
+        }
+        queue.add(stringRequest)
+    }
+
+    private fun editAcc(id :String){
+        if(tvEditAcc.text == "Edit"){
+            Toast.makeText(this, "You can edit Username and Status", Toast.LENGTH_SHORT).show()
+
+            tvEditAcc.apply{
+                isEnabled = false
+                text = "Save"
+                setTextColor(resources.getColor(R.color.cus_grey))
+
+            }
+            etUsername.apply {
+                isFocusableInTouchMode = true
+                requestFocus(etUsername.text.length)
+            }
+
+            etStatus.isFocusableInTouchMode = true
+            lyStatus.hintTextColor = resources.getColorStateList(R.color.cus_pink)
+
+
+        }else if(tvEditAcc.text == "Save"){
+            Toast.makeText(this, "Save clicked", Toast.LENGTH_SHORT).show()
+            update(id)
+
+            etUsername.apply {
+                isFocusableInTouchMode = false
+                clearFocus()
+            }
+            etStatus.apply {
+                isFocusableInTouchMode = false
+                clearFocus()
+            }
+        }
     }
 
     private fun getProfileList(id: String){
@@ -83,59 +182,13 @@ class EditAccount : AppCompatActivity() {
                     }
                 }
             }
-
         },{
             Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
         })
         queue.add(stringRequest)
     }
 
-    private fun editAcc(id :String){
-        val queue = Volley.newRequestQueue(this)
-        val url = "https://gorest.co.in/public/v1/users/$id"
-        val token = "755ee9afdf138797d9e7bcb1aa644e8e136d881b9a94bf46f4e9acc8cb898681"
-        var jsonRequest = JSONObject()
-
-        jsonRequest.put("Authentication",token)
-        jsonRequest.put("name",etUsername.text.toString())
-        jsonRequest.put("status",etStatus.text.toString())
-        val stringRequest = JsonObjectRequest(Request.Method.GET,url,jsonRequest,{
-            response ->
-            Toast.makeText(this, "$response", Toast.LENGTH_SHORT).show()
-
-        },{
-            Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
-        })
 
 
-        if(tvEditAcc.text == "Edit"){
-            Toast.makeText(this, "You can edit Username and Status", Toast.LENGTH_SHORT).show()
-            tvEditAcc.apply{
-                text = "Save"
-                setTextColor(resources.getColor(R.color.cus_pink))
-            }
-            etUsername.apply {
-                isFocusableInTouchMode = true
-                requestFocus(etUsername.text.length)
-            }
-            etStatus.isFocusableInTouchMode = true
-            lyStatus.hintTextColor = resources.getColorStateList(R.color.cus_pink)
 
-        }else{
-
-            Toast.makeText(this, "Text changed", Toast.LENGTH_SHORT).show()
-            tvEditAcc.apply {
-                text = "Edit"
-                setTextColor(resources.getColor(R.color.black))
-            }
-            etUsername.apply {
-                isFocusableInTouchMode = false
-                clearFocus()
-            }
-            etStatus.apply {
-                isFocusableInTouchMode = false
-                clearFocus()
-            }
-        }
-    }
 }

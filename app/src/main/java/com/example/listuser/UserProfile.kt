@@ -36,6 +36,7 @@ class UserProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
 
+        //Initialization
         btnBack = findViewById(R.id.btn_back)
         imgProfile = findViewById(R.id.img_Profile)
         tvName = findViewById(R.id.tv_Name)
@@ -43,6 +44,7 @@ class UserProfile : AppCompatActivity() {
         tvStatus = findViewById(R.id.tv_Status)
         tvEditAcc= findViewById(R.id.tv_Edit)
         tvPost = findViewById(R.id.tv_Post)
+        tvTodo = findViewById(R.id.tv_Todo)
 
         val id = intent.getStringExtra("id").toString()
         userList(id)
@@ -63,6 +65,11 @@ class UserProfile : AppCompatActivity() {
             startActivity(intent)
         }
 
+        tvTodo.setOnClickListener {
+            val intent = Intent(this,UserTodo::class.java)
+            intent.putExtra("id",id)
+            startActivity(intent)
+        }
 
     }
 
