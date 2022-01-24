@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             for (i in 0 until dataLength){
                 jsonData = jsonArray.getJSONObject(i)
                 //profileName.add(jsonData.getString("name"))
-                val profileData = ProfileLists("","","","","")
+                val profileData = ProfileLists("", "", "", "","")
                 profileData.id = jsonData.getString("id")
                 profileData.name = jsonData.getString("name")
                 profileData.email = jsonData.getString("email")

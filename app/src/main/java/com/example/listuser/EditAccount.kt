@@ -1,10 +1,8 @@
 package com.example.listuser
 
-import android.app.VoiceInteractor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
-import android.text.Layout
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
@@ -14,14 +12,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.example.listuser.Models.ProfileLists
 import com.google.android.material.textfield.TextInputLayout
-import org.json.JSONArray
 import org.json.JSONObject
-import org.w3c.dom.Text
 
 class EditAccount : AppCompatActivity() {
     private lateinit var btnBack : ImageView
@@ -105,6 +100,7 @@ class EditAccount : AppCompatActivity() {
         val stringRequest = object: JsonObjectRequest(Method.PUT,url,jsonRequest,{
                 response ->
             Log.i("Update Response",response.toString())
+            Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show()
             tvEditAcc.apply {
                 text = "Edit"
                 setTextColor(ContextCompat.getColor(context,R.color.black))
@@ -126,25 +122,22 @@ class EditAccount : AppCompatActivity() {
     private fun editAcc(id :String){
         if(tvEditAcc.text == "Edit"){
             Toast.makeText(this, "You can edit Username and Status", Toast.LENGTH_SHORT).show()
-
             tvEditAcc.apply{
                 isEnabled = false
                 text = "Save"
                 setTextColor(resources.getColor(R.color.cus_grey))
-
             }
             etUsername.apply {
                 isFocusableInTouchMode = true
                 requestFocus(etUsername.text.length)
             }
-
             etStatus.isFocusableInTouchMode = true
-            lyStatus.hintTextColor = resources.getColorStateList(R.color.cus_pink)
-
+            lyStatus.hintTextColor = ContextCompat.getColorStateList(this,R.color.cus_pink)
 
         }else if(tvEditAcc.text == "Save"){
             Toast.makeText(this, "Save clicked", Toast.LENGTH_SHORT).show()
             update(id)
+            getProfileList(id)
 
             etUsername.apply {
                 isFocusableInTouchMode = false
@@ -154,22 +147,19 @@ class EditAccount : AppCompatActivity() {
                 isFocusableInTouchMode = false
                 clearFocus()
             }
+
         }
     }
 
     private fun getProfileList(id: String){
         val queue = Volley.newRequestQueue(this)
-        val url = "https://gorest.co.in/public/v1/users/"
-        var jsonArray : JSONArray
+        val url = "https://gorest.co.in/public/v1/users/$id"
+
         var jsonObject: JSONObject
-        var profile = ProfileLists("","","","","")
+        var profile = ProfileLists("", "", "", "","")
         val stringRequest = JsonObjectRequest(Request.Method.GET,url,null,{
             response ->
-            jsonArray = response.getJSONArray("data")
-
-            for(i in 0 until jsonArray.length()){
-                jsonObject = jsonArray.getJSONObject(i)
-                if(jsonObject.getString("id") == id){
+            jsonObject = response.getJSONObject("data")
                     etUsername.setText(jsonObject.getString("name"))
                     tvName.text = jsonObject.getString("name")
                     etStatus.setText(jsonObject.getString("status"))
@@ -180,8 +170,8 @@ class EditAccount : AppCompatActivity() {
                     }else{
                         Glide.with(this).load(profile.imgFemaleUrl).centerCrop().placeholder(R.drawable.origi).into(imgProfile)
                     }
-                }
-            }
+
+
         },{
             Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
         })

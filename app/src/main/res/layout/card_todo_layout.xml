@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tvTitle"
@@ -20,7 +20,7 @@
             android:layout_marginRight="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Title:  Update User"
+            android:text="Title:       Update User"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/tvStatus"
@@ -30,7 +30,7 @@
             android:layout_marginRight="50dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-            android:text="Status: Completed"
+            android:text="Status:   Completed"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/tvDate"
@@ -40,8 +40,8 @@
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvStatus"
-            android:text="Due on: Sep 29 , 2021"
-            android:textSize="11sp"
+            android:text="Due on:    Sep 29 , 2021"
+            android:textSize="13sp"
             android:textStyle="bold"/>
 
         <de.hdodenhof.circleimageview.CircleImageView

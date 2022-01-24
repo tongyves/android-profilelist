@@ -1,11 +1,8 @@
 package com.example.listuser
 
-import android.app.DownloadManager
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +16,6 @@ import com.example.listuser.Models.ProfileLists
 import com.example.listuser.adapter.UserPostAdapter
 import org.json.JSONArray
 import org.json.JSONObject
-import org.w3c.dom.Text
 
 class UserPost : AppCompatActivity() {
 
@@ -82,7 +78,7 @@ class UserPost : AppCompatActivity() {
         val stringRequest = JsonObjectRequest(Request.Method.GET,url,null,{
              response ->
             val jsonObject = response.getJSONObject("data")
-            val profileData = ProfileLists("","","","","")
+            val profileData = ProfileLists("", "", "", "","")
             if(jsonObject.getString("gender") == "male"){
                 Glide.with(this).load(profileData.imgMaleUrl).centerCrop().placeholder(R.drawable.origi).into(imgProfile)
             }else{

@@ -3,7 +3,6 @@ package com.example.listuser
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,8 +10,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.JsonRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.example.listuser.Models.ProfileLists
@@ -29,6 +26,7 @@ class UserProfile : AppCompatActivity() {
     private lateinit var tvEditAcc : TextView
     private lateinit var tvTodo : TextView
     private lateinit var tvPost: TextView
+    private lateinit var tvDelete : TextView
 
 
 
@@ -45,6 +43,7 @@ class UserProfile : AppCompatActivity() {
         tvEditAcc= findViewById(R.id.tv_Edit)
         tvPost = findViewById(R.id.tv_Post)
         tvTodo = findViewById(R.id.tv_Todo)
+        tvDelete = findViewById(R.id.tv_Delete)
 
         val id = intent.getStringExtra("id").toString()
         userList(id)
@@ -68,23 +67,23 @@ class UserProfile : AppCompatActivity() {
         tvTodo.setOnClickListener {
             val intent = Intent(this,UserTodo::class.java)
             intent.putExtra("id",id)
+
             startActivity(intent)
         }
+        tvDelete.setOnClickListener {
+        }
+
 
     }
 
     private fun userList(id : String){
         val queue = Volley.newRequestQueue(this)
-        val url = "https://gorest.co.in/public/v1/users/"
-        var jsonArray : JSONArray
+        val url = "https://gorest.co.in/public/v1/users/$id"
         var jsonObject : JSONObject
-        val profile = ProfileLists("","","","","")
+        val profile = ProfileLists("", "", "", "","")
         val stringRequest = JsonObjectRequest(Request.Method.GET,url,null,{
             response ->
-            jsonArray = response.getJSONArray("data")
-            for(i in 0 until jsonArray.length()){
-                jsonObject = jsonArray.getJSONObject(i)
-                if(jsonObject.getString("id") == id){
+            jsonObject = response.getJSONObject("data")
                     if(jsonObject.getString("gender") == "male"){
                         Glide.with(this).load(profile.imgMaleUrl).centerCrop().placeholder(R.drawable.origi).into(imgProfile)
                     }else{
@@ -100,8 +99,8 @@ class UserProfile : AppCompatActivity() {
                             setBackgroundResource(R.drawable.btn_rounded_withstroke)
                         }
                     }
-                }
-            }
+
+
 
         },{
             Toast.makeText(this, "failed", Toast.LENGTH_SHORT).show()
