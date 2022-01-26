@@ -127,6 +127,9 @@ class UserTodo : AppCompatActivity() {
             tvTotalTodo.text = "Total Todos: $dataLength"
             val outputDateFormat = SimpleDateFormat("MMM DD,yyyy", Locale.ENGLISH)
             val inputDateFormat = SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss.sss+05:30", Locale.ENGLISH)
+            when(dataLength){
+                0 -> Toast.makeText(this, "There is no todo", Toast.LENGTH_SHORT).show()
+            }
             for (i in 0 until dataLength){
                 jsonObject = jsonArray.getJSONObject(i)
                 val todoData = TodoList("","","","")
